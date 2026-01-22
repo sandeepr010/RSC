@@ -1,0 +1,20 @@
+.cardContainer{
+	height: 360px !important;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.complaintCard{
+	border: 4px solid;
+	border-radius: 15px 8px 15px 8px;
+	width: 90%;
+	box-shadow: 4px 3px lightblue;
+	padding: 5px;
+	margin-bottom: 7px;
+}
+
+.complaintCard:hover{
+	cursor: pointer;
+}

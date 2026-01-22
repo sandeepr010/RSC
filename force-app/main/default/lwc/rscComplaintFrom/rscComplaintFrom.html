@@ -1,0 +1,13 @@
+<template>
+    <lightning-card>
+        <div class="tableContainer">
+            <div style="padding-bottom: 1%;">
+                <h1> Register Complaint </h1>
+            </div>
+            <div class="slds-border_top" style="padding-bottom: 1%;"></div>
+            <lightning-record-form object-api-name={objectApiName} fields={fields} onsubmit={handleSubmit}
+                onsuccess={onSuccess}>
+            </lightning-record-form>
+        </div>
+    </lightning-card>
+</template>

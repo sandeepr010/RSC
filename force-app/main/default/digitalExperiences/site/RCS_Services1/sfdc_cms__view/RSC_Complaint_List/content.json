@@ -1,0 +1,58 @@
+{
+  "type" : "sfdc_cms__view",
+  "title" : "RSC Complaint List",
+  "contentBody" : {
+    "component" : {
+      "children" : [ {
+        "children" : [ {
+          "attributes" : {
+            "backgroundImageConfig" : "",
+            "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "componentSpacerSize" : "",
+            "layoutDirectionDesktop" : "row",
+            "layoutDirectionMobile" : "column",
+            "layoutDirectionTablet" : "column",
+            "maxContentWidth" : "",
+            "sectionColumnGutterWidth" : "",
+            "sectionConfig" : "{\"UUID\":\"a3a8cc75-050d-4d28-8de1-914be3957d71\",\"columns\":[{\"UUID\":\"0113c36e-b3b0-4313-9e39-f473f4b1cd86\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":[]}]}",
+            "sectionMinHeight" : "",
+            "sectionVerticalAlign" : "flex-start"
+          },
+          "children" : [ {
+            "id" : "0113c36e-b3b0-4313-9e39-f473f4b1cd86",
+            "name" : "col1",
+            "title" : "Column 1",
+            "type" : "region"
+          } ],
+          "definition" : "community_layout:section",
+          "id" : "a3a8cc75-050d-4d28-8de1-914be3957d71",
+          "type" : "component"
+        } ],
+        "id" : "a1189544-06da-4af0-a94e-dab24a1738eb",
+        "name" : "content",
+        "title" : "Content",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "definition" : "community_builder:seoAssistant",
+          "id" : "40838a55-db0b-45b2-935a-40aacd3729ff",
+          "type" : "component"
+        } ],
+        "id" : "9e7ee569-91d8-4bc8-9c4a-7cacbf36e69f",
+        "name" : "sfdcHiddenRegion",
+        "title" : "sfdcHiddenRegion",
+        "type" : "region"
+      } ],
+      "definition" : "community_layout:sldsFlexibleLayout",
+      "id" : "336bce66-1da5-4ebe-b1d8-4d6404fb2fc5",
+      "type" : "component"
+    },
+    "dataProviders" : [ ],
+    "themeLayoutType" : "Inner",
+    "viewType" : "list-RSC_Complaint__c"
+  },
+  "urlName" : "rsc-complaint-list"
+}

@@ -1,0 +1,16 @@
+<apex:page standardController="RSC_Complaint__c" renderAs="pdf">
+    <apex:pageBlock title="Complaint Details">
+        <apex:pageBlockSection>
+            <apex:outputField value="{! RSC_Complaint__c.Name }" />
+            <apex:outputField value="{! RSC_Complaint__c.Subject__c }" />
+            <apex:outputField value="{! RSC_Complaint__c.RSC_Complaint_Category__r.Name }" />
+            <apex:outputField value="{! RSC_Complaint__c.RSC_Complaint_Category__r.Category_Label__c }" />
+            <apex:outputField value="{! RSC_Complaint__c.RSC_Complaint_Category__r.Category_Details__c }" />
+            <apex:outputField value="{! RSC_Complaint__c.Status__c }" />
+            <apex:outputField value="{! RSC_Complaint__c.Priority__c }" />
+            <apex:outputField value="{! RSC_Complaint__c.Complaint_Description__c }" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <p>Thank you for contacting support.</p>
+</apex:page>

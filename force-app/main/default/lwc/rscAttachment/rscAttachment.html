@@ -1,0 +1,12 @@
+<template>
+    <lightning-card>
+        <div style="display: flex;flex-flow: column;justify-content: center;align-items: center;">
+            <lightning-file-upload label="Upload Supporting Documents" name="complaintFiles" record-id={recordId}
+                multiple accept={acceptedFormats} onuploadfinished={handleUploadFinished}>
+            </lightning-file-upload>
+            <template if:true={uploadedFiles}>
+                Attached Files: {uploadedFiles}
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,163 @@
+{
+  "type" : "sfdc_cms__themeLayout",
+  "title" : "Default Header and Footer",
+  "contentBody" : {
+    "component" : {
+      "attributes" : {
+        "fixThemeHeader" : false,
+        "showStickyFooter" : false,
+        "showStickyHeader" : false,
+        "stickyFooterBackgroundColor" : "rgb(35, 37, 100)",
+        "stickyHeaderBackgroundColor" : "rgb(35, 37, 100)"
+      },
+      "children" : [ {
+        "children" : [ {
+          "attributes" : {
+            "allowVisitorClose" : false,
+            "assistiveText" : "",
+            "buttonVerticalAlignment" : "Top",
+            "closeStyle" : "X Icon - Dark",
+            "mobileMaxHeight" : 10
+          },
+          "children" : [ {
+            "id" : "eec4932e-f960-4f80-b8d8-be584aa20ab7",
+            "name" : "content",
+            "title" : "Content",
+            "type" : "region"
+          } ],
+          "definition" : "dxp_page_layout:sectionTopSetting",
+          "id" : "16866909-ce5a-4e7e-91ab-0a9b6d1498f2",
+          "type" : "component"
+        } ],
+        "id" : "82cb41df-94f3-4656-a68a-a106d398caea",
+        "name" : "stickyHeader",
+        "title" : "Theme Fixed Header",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "height" : 50,
+            "imageInfo" : "{}",
+            "imageOverlayColor" : "rgba(0,0,0,0)",
+            "logoLocation" : "center",
+            "logoWidth" : 75,
+            "menuStyle" : "horizontal",
+            "showLogo" : true
+          },
+          "children" : [ {
+            "children" : [ {
+              "attributes" : {
+                "menuAlignment" : "right",
+                "menuSpacing" : "medium",
+                "menuStyle" : "horizontal",
+                "navigationMenuEditor" : "Default_Navigation",
+                "showHomeLink" : true,
+                "textDecoration" : "{\"textTransform\":\"capitalize\"}",
+                "visibleMenuItemsCount" : 10
+              },
+              "definition" : "community_navigation:multiLevelNavigationWrapper",
+              "id" : "f2f21b75-dc21-45f9-ac3b-214b70fc9d34",
+              "type" : "component"
+            } ],
+            "id" : "cdfd8801-9d91-4b6b-8357-5dd73ea4e8a3",
+            "name" : "horizontalNavigation",
+            "title" : "Horizontal Nav Menu",
+            "type" : "region"
+          }, {
+            "children" : [ {
+              "attributes" : {
+                "menuAlignment" : "left",
+                "menuSpacing" : "none",
+                "menuStyle" : "hamburger",
+                "showHomeLink" : true,
+                "textDecoration" : "none",
+                "visibleMenuItemsCount" : 10
+              },
+              "definition" : "community_navigation:multiLevelNavigationWrapper",
+              "id" : "eda6d380-6903-44c1-a2bc-8a8482cae91f",
+              "type" : "component"
+            } ],
+            "id" : "03877a98-8967-4aef-bd83-3062dfa0043e",
+            "name" : "hamburgerNavigation",
+            "title" : "Hamburger Nav Menu",
+            "type" : "region"
+          } ],
+          "definition" : "dxp_content_layout:header",
+          "id" : "4edb0c76-9deb-48ea-84c8-3c8ab4ee1d58",
+          "type" : "component"
+        } ],
+        "id" : "e1e665ec-83e8-42f4-8f11-1ec1280ebeb3",
+        "name" : "header",
+        "title" : "Theme Header",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "backgroundImageConfig" : "",
+            "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "componentSpacerSize" : "",
+            "layoutDirectionDesktop" : "row",
+            "layoutDirectionMobile" : "column",
+            "layoutDirectionTablet" : "column",
+            "maxContentWidth" : "",
+            "sectionColumnGutterWidth" : "",
+            "sectionConfig" : "{\"UUID\":\"88a43ace-07ce-4209-b99d-8bb33b53fc3c\",\"columns\":[{\"UUID\":\"0799b6ac-bdfc-4231-ac5b-915d830ec42b\",\"columnName\":\"Column 1\",\"columnKey\":\"footerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+            "sectionMinHeight" : "",
+            "sectionVerticalAlign" : "flex-start"
+          },
+          "children" : [ {
+            "id" : "0799b6ac-bdfc-4231-ac5b-915d830ec42b",
+            "name" : "footerSection",
+            "title" : "Theme Footer",
+            "type" : "region"
+          } ],
+          "definition" : "community_layout:section",
+          "id" : "88a43ace-07ce-4209-b99d-8bb33b53fc3c",
+          "type" : "component"
+        } ],
+        "id" : "56dc9396-9435-477e-a2e7-6f0331b370a6",
+        "name" : "footer",
+        "title" : "Theme Footer",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "allowVisitorClose" : false,
+            "assistiveText" : "",
+            "closeStyle" : "X Icon - Dark",
+            "hideWhenFooterInViewport" : false,
+            "mobileMaxHeight" : 10
+          },
+          "children" : [ {
+            "id" : "bf5b2914-3f9f-4ec8-ab3b-15a1e590af31",
+            "name" : "content",
+            "title" : "Content",
+            "type" : "region"
+          } ],
+          "definition" : "dxp_page_layout:sectionBottomSetting",
+          "id" : "4d9a6756-09fa-41d2-b31b-bea0bfc4f7d9",
+          "type" : "component"
+        } ],
+        "id" : "9938552f-b369-4b12-9f62-24e00abab7ad",
+        "name" : "stickyFooter",
+        "title" : "Theme Fixed Footer",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : { },
+          "definition" : "dxp_page_layout:placeHolder",
+          "id" : "52c594ae-5291-42ab-8a54-8804fc41011c",
+          "type" : "component"
+        } ],
+        "id" : "091029dc-4164-4f23-80b9-6274d5b3dd19",
+        "name" : "placeHolder",
+        "title" : "Place Holder",
+        "type" : "region"
+      } ],
+      "definition" : "marketing_microsite:headerAndFooter",
+      "id" : "35f6ca89-b77c-4b46-bfd0-b592ab757f04",
+      "type" : "component"
+    }
+  },
+  "urlName" : "default-header-and-footer"
+}

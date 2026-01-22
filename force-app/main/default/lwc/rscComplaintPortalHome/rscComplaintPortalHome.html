@@ -1,0 +1,34 @@
+<template>
+    <lightning-card title="RS Services">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-3">
+                <span>
+                    <template if:false={showFileUpload}>
+                        <c-rsc-complaint-from onsuccess={onRecordCreation}></c-rsc-complaint-from>
+                    </template>
+                    <template if:true={showFileUpload}>
+                        <div style="display: flex;justify-content: flex-end;align-items: flex-end;">
+                            <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" title="Refresh" onclick={onRefresh}></lightning-button-icon>
+                        </div>
+                        <c-rsc-attachment record-id={recordId}></c-rsc-attachment>
+                    </template>
+                </span>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                <span>
+                    <lightning-card title="Complaint List">
+                        <div class="cardContainer">
+                        <template for:each={complaintList} for:item="complaint">
+                            <div key={complaint.Name} class="complaintCard" data-id={complaint.Id} onclick={onCardClick}>
+                                Complaint Number : {complaint.Name}<br>
+                                Subject : {complaint.Subject__c}<br>
+                                Status : {complaint.Status__c}<br>
+                            </div>
+                        </template>
+                        </div>
+                    </lightning-card>
+                </span>
+            </div>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,5 @@
+{
+  "apiName" : "RSC_Complaint_Detail",
+  "type" : "sfdc_cms__view",
+  "path" : "views"
+}

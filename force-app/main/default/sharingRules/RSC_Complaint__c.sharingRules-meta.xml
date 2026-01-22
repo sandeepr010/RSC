@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Manager</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Manager</label>
+        <sharedTo>
+            <role>Manager</role>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Complaint_Origin__c</field>
+            <operation>equals</operation>
+            <value>Portal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Complaint_Origin__c</field>
+            <operation>notEqual</operation>
+            <value>Portal</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

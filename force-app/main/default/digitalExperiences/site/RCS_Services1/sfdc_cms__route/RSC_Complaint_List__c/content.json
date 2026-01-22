@@ -1,0 +1,12 @@
+{
+  "type" : "sfdc_cms__route",
+  "title" : "RSC Complaint List",
+  "contentBody" : {
+    "activeViewId" : "RSC_Complaint_List",
+    "configurationTags" : [ ],
+    "pageAccess" : "UseParent",
+    "routeType" : "list-RSC_Complaint__c",
+    "urlPrefix" : "rsc-complaint"
+  },
+  "urlName" : "rsc-complaint-list"
+}
