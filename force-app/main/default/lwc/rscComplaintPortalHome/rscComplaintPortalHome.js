@@ -5,6 +5,7 @@ import getComplaints from '@salesforce/apex/RSCComplaintPortalHomelHandler.getCo
 export default class RscComplaintPortalHome extends NavigationMixin(LightningElement) {
     @track complaintList = [];
     @track showFileUpload = false;
+    @track showForm = true;
     @track recordId;
     selectedComplaint;
     error;
@@ -48,5 +49,9 @@ export default class RscComplaintPortalHome extends NavigationMixin(LightningEle
     onRefresh(){
         this.recordId = null;
         this.showFileUpload = false;
+        this.showForm = false;
+        setTimeout(() => {
+            this.showForm = true;
+        }, 1000);
     }
 }
