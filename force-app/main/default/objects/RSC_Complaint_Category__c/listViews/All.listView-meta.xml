@@ -3,6 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Category_Label__c</columns>
+    <columns>Priotiy__c</columns>
     <columns>Active__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>

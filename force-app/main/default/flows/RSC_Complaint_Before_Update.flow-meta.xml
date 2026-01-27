@@ -25,17 +25,44 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Priority_Check</targetReference>
+            </connector>
+            <label>Record is appooved</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Priority_Check</name>
+        <label>Priority Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Low</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.OwnerId</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>$Record.Priority__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>$User.Id</elementReference>
+                    <stringValue>Normal</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Change_record_owner_to_current_user</targetReference>
             </connector>
-            <label>Record is appooved</label>
+            <label>Low</label>
+        </rules>
+        <rules>
+            <name>Medium</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Medium</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Medium</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -91,5 +118,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

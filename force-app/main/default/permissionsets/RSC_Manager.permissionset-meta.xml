@@ -4,6 +4,10 @@
         <application>Ranjith_Shastri_Case_Study</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <classAccesses>
+        <apexClass>RSCComplaintTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>RSC_Complaint_Category__c.Active__c</field>

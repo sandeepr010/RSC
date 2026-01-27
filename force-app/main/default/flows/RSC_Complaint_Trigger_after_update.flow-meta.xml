@@ -52,6 +52,36 @@
         <offset>0</offset>
         <versionString>2.0.1</versionString>
     </actionCalls>
+    <actionCalls>
+        <name>Submit_for_close_case</name>
+        <label>Submit for close case</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>submit</actionName>
+        <actionType>submit</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>comment</name>
+            <value>
+                <stringValue>Complaint is Resolved please close this complaint</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>processDefinitionNameOrId</name>
+            <value>
+                <stringValue>Close_Complaint</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>submit</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -103,92 +133,6 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Assignee_Complaint</name>
-        <label>Assignee Complaint</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>State_Check</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Approved_and_Not_Assigned</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Is_Approved__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Assigned_To__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.OwnerId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <elementReference>$User.Id</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_shared_details</targetReference>
-            </connector>
-            <label>Approved and Not Assigned</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Share_record_is_available</name>
-        <label>Check Share record is available</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>State_Check</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Available</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_shared_details</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Assigned_To__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record__Prior.Assigned_To__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Delete_shared_details</targetReference>
-            </connector>
-            <label>Available</label>
-        </rules>
-        <rules>
-            <name>Not_avilable</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_shared_details</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>New_Manual_Share_record</targetReference>
-            </connector>
-            <label>Not avilable</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>State_Check</name>
         <label>State Check</label>
         <locationX>0</locationX>
@@ -239,6 +183,21 @@
             <label>Awaiting Info</label>
         </rules>
         <rules>
+            <name>Resolved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Submit_for_close_case</targetReference>
+            </connector>
+            <label>Resolved</label>
+        </rules>
+        <rules>
             <name>Closed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -284,114 +243,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Manual_Share_record</name>
-        <label>Manual Share record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>State_Check</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>AccessLevel</field>
-            <value>
-                <stringValue>Read</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RowCause</field>
-            <value>
-                <stringValue>Manual</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>UserOrGroupId</field>
-            <value>
-                <elementReference>$Record.Assigned_To__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>RSC_Complaint__Share</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>New_Manual_Share_record</name>
-        <label>New Manual Share record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>State_Check</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>AccessLevel</field>
-            <value>
-                <stringValue>Read</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RowCause</field>
-            <value>
-                <stringValue>Manual</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>UserOrGroupId</field>
-            <value>
-                <elementReference>$Record.Assigned_To__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>RSC_Complaint__Share</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordDeletes>
-        <name>Delete_shared_details</name>
-        <label>Delete shared details</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Manual_Share_record</targetReference>
-        </connector>
-        <inputReference>Get_shared_details</inputReference>
-    </recordDeletes>
-    <recordLookups>
-        <name>Get_shared_details</name>
-        <label>Get shared details</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Share_record_is_available</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ParentId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>UserOrGroupId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Assigned_To__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RSC_Complaint__Share</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <name>Record_owner</name>
         <label>Record owner</label>
@@ -417,7 +268,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assignee_Complaint</targetReference>
+            <targetReference>State_Check</targetReference>
         </connector>
         <object>RSC_Complaint__c</object>
         <recordTriggerType>Update</recordTriggerType>

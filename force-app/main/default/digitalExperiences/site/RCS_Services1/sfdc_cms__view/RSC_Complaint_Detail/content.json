@@ -21,6 +21,13 @@
           "children" : [ {
             "children" : [ {
               "attributes" : {
+                "recordId" : "{!recordId}"
+              },
+              "definition" : "c:rscComplaintUpdate",
+              "id" : "4bf98a74-8182-4822-835e-7ffe2680a8f4",
+              "type" : "component"
+            }, {
+              "attributes" : {
                 "backgroundColor" : "",
                 "isLinkable" : false,
                 "linkAssistiveText" : "",
