@@ -16,6 +16,7 @@
 	<types>
 		<members>RSC_Complaint_Category__c</members>
 		<members>RSC_Complaint__c</members>
+		<members>RSC_SLA__c</members>
 		<name>CustomObject</name>
 	</types>
 	<types>

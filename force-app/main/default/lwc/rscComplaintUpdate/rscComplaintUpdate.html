@@ -1,0 +1,48 @@
+<template>
+    <template if:true={showEditButton}>
+        <div style="display: flex;justify-content: end;">
+            <button class="slds-button slds-button_brand" onclick={onUpdateDetails}>Update Details</button>
+            <button class="slds-button slds-button_brand" onclick={onAttachment}>AttachDocs</button>
+        </div>
+    </template>
+    <template if:true={openModal}>
+        <section role="dialog" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close" onclick={onClose}>
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{modalHeader}</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <template if:true={showSpinner}>
+                        <div style="position: relative; align-items: center; display: inline-block; width: 80px; height: 80px;">
+                            <lightning-spinner variant="brand" alternative-text="Loading" size="small"></lightning-spinner>
+                        </div>
+                    </template>
+                    <template if:true={enableEditFrom}>
+                        <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId}
+                            onsuccess={onSuccess} onerror={handleError}>
+                            <lightning-messages></lightning-messages>
+                            <div class="slds-grid">
+                                <div class="slds-size_2-of-2 slds-grid slds-wrap slds-form_horizontal slds-form">
+                                    <lightning-output-field field-name={name}></lightning-output-field>
+                                    <lightning-output-field field-name={subject}></lightning-output-field>
+                                    <lightning-input-field field-name={description}></lightning-input-field>
+                                    <lightning-output-field field-name={status}></lightning-output-field>
+                                </div>
+                            </div>
+                            <lightning-button type="submit" variant="brand" label="Update"
+                                class="slds-align_absolute-center"></lightning-button>
+                        </lightning-record-edit-form>
+                    </template>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
