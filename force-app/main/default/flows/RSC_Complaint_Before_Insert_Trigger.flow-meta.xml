@@ -18,7 +18,7 @@
                 <leftValueReference>$Record.RSC_Complaint_Category__r.Priotiy__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Low</stringValue>
+                    <stringValue>Normal</stringValue>
                 </rightValue>
             </conditions>
             <connector>

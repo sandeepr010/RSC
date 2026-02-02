@@ -85,6 +85,50 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_SLA_Values</name>
+        <label>Assign SLA Values</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>RSCSLA.RSC_Complaint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RSCSLA.SLA_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>On Track</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RSCSLA.Completed_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SLA_CompletedBy</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RSCSLA.Next_Notification_On__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SLA_Notification_Time</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RSCSLA.Priority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Priority__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SLA_Record_Creation</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Body_and_Subject_In_Progress</name>
         <label>Body and Subject In Progress</label>
         <locationX>0</locationX>
@@ -129,9 +173,96 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Record_owner</targetReference>
+            <targetReference>SLA_Record_Update</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>RSC_Activity_Record_Assignment</name>
+        <label>RSC Activity Record Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>RSC_Activity.RSC_SLA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SLA_Record_Get.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RSC_Activity.Subject__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RSC_Activity.Details__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Your record has been approved and assigned to service executive </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>RSC_Activity_Record_Creation</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_Approved</name>
+        <label>Is Approved</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>On_Closed_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Approve</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Is_Approved__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Is_Approved__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_SLA_Values</targetReference>
+            </connector>
+            <label>Check Approve</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>On_Closed_Case</name>
+        <label>On Closed Case</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>State_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Closed_CMP</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_SLA_Record_Closed</targetReference>
+            </connector>
+            <label>Closed CMP</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>State_Check</name>
         <label>State Check</label>
@@ -222,6 +353,26 @@
     </decisions>
     <description>This trigger is to send email of state update and assign record to internal user</description>
     <environments>Default</environments>
+    <formulas>
+        <name>SLA_CompletedBy</name>
+        <dataType>DateTime</dataType>
+        <expression>CASE(
+    {!$Record.Priority__c},
+    &quot;Urgent&quot;, {!$Record.Approval_Date__c} + (6 / 24),
+    &quot;High&quot;,   {!$Record.Approval_Date__c} + 1,
+    &quot;Medium&quot;, {!$Record.Approval_Date__c} + 3,
+    {!$Record.Approval_Date__c} + 7
+)</expression>
+    </formulas>
+    <formulas>
+        <name>SLA_Notification_Time</name>
+        <dataType>DateTime</dataType>
+        <expression>IF(
+    ISPICKVAL({!$Record.Priority__c}, &quot;Urgent&quot;),
+    {!$Record.Approval_Date__c} + (3 / 24),
+    {!SLA_CompletedBy} - (14 / 24)
+)</expression>
+    </formulas>
     <interviewLabel>RSC Complaint Trigger after update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RSC Complaint Trigger after update</label>
     <processMetadataValues>
@@ -243,6 +394,26 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>RSC_Activity_Record_Creation</name>
+        <label>RSC Activity Record Creation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>On_Closed_Case</targetReference>
+        </connector>
+        <inputReference>RSC_Activity</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>SLA_Record_Creation</name>
+        <label>SLA Record Creation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>SLA_Record_Get</targetReference>
+        </connector>
+        <inputReference>RSCSLA</inputReference>
+    </recordCreates>
     <recordLookups>
         <name>Record_owner</name>
         <label>Record owner</label>
@@ -264,12 +435,89 @@
         <object>User</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <start>
+    <recordLookups>
+        <name>SLA_Record_Get</name>
+        <label>SLA Record Get</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>RSC_Activity_Record_Assignment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RSC_Complaint__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RSC_SLA__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>SLA_Record_Update</name>
+        <label>SLA Record Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Record_owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RSC_Complaint__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Closed__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>RSC_SLA__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_SLA_Record_Closed</name>
+        <label>Update SLA Record Closed</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>State_Check</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RSC_Complaint__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Closed__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>RSC_SLA__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Approved</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
         <object>RSC_Complaint__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
@@ -281,5 +529,21 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RSC_Activity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RSC_Activity__c</objectType>
+    </variables>
+    <variables>
+        <name>RSCSLA</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RSC_SLA__c</objectType>
     </variables>
 </Flow>

@@ -1,10 +1,11 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import Subject from '@salesforce/schema/RSC_Complaint__c.Subject__c';
 import Complaint_Category from '@salesforce/schema/RSC_Complaint__c.RSC_Complaint_Category__c';
 import Complaint_Description from '@salesforce/schema/RSC_Complaint__c.Complaint_Description__c';
 export default class RscComplaintFrom extends LightningElement {
     objectApiName = 'RSC_Complaint__c';
     fields = [Subject, Complaint_Category, Complaint_Description];
+    @api formHeader = 'Register Complaint';
 
     handleSubmit(event){
         event.preventDefault();

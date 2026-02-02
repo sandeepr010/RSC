@@ -10,9 +10,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Low</fullName>
+                <fullName>Normal</fullName>
                 <default>true</default>
-                <label>Low</label>
+                <label>Normal</label>
             </value>
             <value>
                 <fullName>Medium</fullName>
@@ -23,6 +23,11 @@
                 <fullName>High</fullName>
                 <default>false</default>
                 <label>High</label>
+            </value>
+            <value>
+                <fullName>Urgent</fullName>
+                <default>false</default>
+                <label>Urgent</label>
             </value>
         </valueSetDefinition>
     </valueSet>
