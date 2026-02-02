@@ -201,7 +201,7 @@ public class SLA_Notification implements Database.Batchable<sObject> {
         } else if (type == 'second') {
             body = 'Please check the following RSC Complaints for which SLA is about to breach:<br/>';
         } else {
-            body = '<b>SLA breached for the following RSC Complaints:</b><br/>';
+            body = '<b>SLA breached for the following RSC Complaints and Assigned to you:</b><br/>';
         }
         
         for (Id recordId : recordIds) {
