@@ -39,6 +39,10 @@
     </entryCriteria>
     <finalApprovalActions>
         <action>
+            <name>Approved_Date</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
             <name>Is_Approved</name>
             <type>FieldUpdate</type>
         </action>

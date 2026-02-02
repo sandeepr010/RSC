@@ -26,7 +26,7 @@ export default class RscComplaintUpdate extends LightningElement {
     caseRecord;
 
     get showEditButton() {
-        return this.caseRecord.data && this.caseRecord.data.fields.Status__c.value === 'Awaiting Info';
+        return this.caseRecord.data && (this.caseRecord.data.fields.Status__c.value === 'Awaiting Info' || this.caseRecord.data.fields.Status__c.value === 'New');
     }
 
     get openModal() {

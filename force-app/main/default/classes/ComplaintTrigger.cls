@@ -13,6 +13,9 @@ public with sharing class ComplaintTrigger {
         
         for (RSC_Complaint__c comp : newComplaints) {
             if(comp.Is_Approved__c == true){
+                if(oldComplaints.get(comp.Id).Is_Approved__c == false){
+                    comp.Approved_By__c = UserInfo.getUserId();
+                }
                 if(comp.Assigned_To__c  != null && (oldComplaints.get(comp.Id).Assigned_To__c == null || oldComplaints.get(comp.Id).Assigned_To__c != comp.Assigned_To__c)){
                     comp.ownerId = comp.Assigned_To__c;
                 }else if(comp.Assigned_To__c == null &&( !queueMap.values().contains(comp.ownerId) || oldComplaints.get(comp.Id).Priority__c != comp.Priority__c)){

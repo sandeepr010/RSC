@@ -10,9 +10,10 @@
                         </div>
                     </template>
                     <template if:true={showForm}>
-                        <c-rsc-complaint-from onsuccess={onRecordCreation}></c-rsc-complaint-from>
+                        <c-rsc-complaint-from form-header={formHeader} onsuccess={onRecordCreation}></c-rsc-complaint-from>
                     </template>
                     <template if:true={showFileUpload}>
+                        <b>Note: Please upload any documents or provide issue details that may help us resolve your complaint.</b>
                         <c-rsc-attachment record-id={recordId}></c-rsc-attachment>
                     </template>
                 </span>
