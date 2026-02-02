@@ -11,6 +11,7 @@ public class SLA_Notification implements Database.Batchable<sObject> {
     
     public void execute(Database.BatchableContext bc, List<RSC_SLA__c> scope){
         List<RSC_SLA__c> rscToUpdate = new List<RSC_SLA__c>();
+        List<RSC_Complaint__c> rscComplaintToUpdate = new List<RSC_Complaint__c>();
         
         Map<Id,List<Id>> userRecordDetailsOne = new Map<Id,List<Id>>();
         Map<Id,List<Id>> userRecordDetailsTwo = new Map<Id,List<Id>>();
@@ -50,6 +51,10 @@ public class SLA_Notification implements Database.Batchable<sObject> {
                 List<Id> managerRecordIds = userRecordDetailsEscalated.containsKey(sla.RSC_Complaint__r.Approved_By__c) ? userRecordDetailsEscalated.get(sla.RSC_Complaint__r.Approved_By__c) : new List<Id>();
                 managerRecordIds.add(sla.Id);
                 userRecordDetailsEscalated.put(sla.RSC_Complaint__r.Approved_By__c, managerRecordIds);
+
+                RSC_Complaint__c rscComplaint = new RSC_Complaint__c(Id = sla.RSC_Complaint__c);
+                rscComplaint.Assigned_To__c = sla.RSC_Complaint__r.Approved_By__c;
+                rscComplaintToUpdate.add(rscComplaint);
             }
             sla.Next_Notification_On__c = nextNotificationTime;
             rscToUpdate.add(sla);
@@ -64,6 +69,9 @@ public class SLA_Notification implements Database.Batchable<sObject> {
         sendUrgentNotification(userRecordDetailsEscalated, queueUserMap, owea.Id);
         
         update rscToUpdate;
+        if(!rscComplaintToUpdate.isEmpty()){
+            update rscComplaintToUpdate;
+        }
     }
     
     public void finish(Database.BatchableContext bc){
