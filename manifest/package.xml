@@ -83,7 +83,6 @@
 	<types>
 		<members>RSC_Attachment_Table</members>
 		<members>RSC_Complaint_Before_Insert_Trigger</members>
-		<members>RSC_Complaint_Before_Update</members>
 		<members>RSC_Complaint_Trigger_Before_Insert</members>
 		<members>RSC_Complaint_Trigger_after_update</members>
 		<name>Flow</name>

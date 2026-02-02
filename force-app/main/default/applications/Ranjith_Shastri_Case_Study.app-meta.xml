@@ -34,6 +34,7 @@
     <navType>Standard</navType>
     <tabs>RSC_Complaint__c</tabs>
     <tabs>RSC_Complaint_Category__c</tabs>
+    <tabs>RSC_SLA__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Ranjith_Shastri_Case_Study_UtilityBar</utilityBar>
 </CustomApplication>

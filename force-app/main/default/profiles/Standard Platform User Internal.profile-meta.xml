@@ -26,6 +26,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>RSC_Complaint__c.Approval_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RSC_Complaint__c.Approved_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>RSC_Complaint__c.Assigned_To__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62,6 +72,36 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>RSC_Complaint__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RSC_SLA__c.Closed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RSC_SLA__c.Completed_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RSC_SLA__c.Next_Notification_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RSC_SLA__c.Priority__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RSC_SLA__c.SLA_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RSC_SLA__c.SLA_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
