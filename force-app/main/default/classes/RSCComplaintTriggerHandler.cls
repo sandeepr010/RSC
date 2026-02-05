@@ -1,3 +1,18 @@
+/**
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ * Class Name      : RSCComplaintTriggerHandler
+ * Author          : Sandeep.R
+ * Created Date    : Jan 15, 2026
+ * Last Modified By: Sandeep.R
+ * Last Modified On: Jan 15, 2026
+ * Description     : Handler class for After insert flow trigger
+ *  
+ * Change History  :
+ *  Date          │   Author     │   Change
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ *  Jan 15, 2026  │ Sandeep.R    │ Initial version
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ */
 public with sharing class RSCComplaintTriggerHandler {
     @InvocableMethod
     public static void sendEmailWithAttachment(List<Id> complaintIds) {
@@ -15,7 +30,7 @@ public with sharing class RSCComplaintTriggerHandler {
             PageReference pdfPage = Page.rscComplaintDetails;
             pdfPage.getParameters().put('id', String.valueOf(compId));
             
-            Blob pdfBlob = pdfPage.getContentAsPDF();
+            Blob pdfBlob = Test.isRunningTest() ? Blob.valueOf('Dummy PDF Content') : pdfPage.getContentAsPDF();
             Messaging.EmailFileAttachment pdfAttachment = new Messaging.EmailFileAttachment();
             pdfAttachment.setFileName('Complaint_Details.pdf');
             pdfAttachment.setBody(pdfBlob);

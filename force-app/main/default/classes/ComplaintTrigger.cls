@@ -1,3 +1,19 @@
+/**
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ * Class Name      : ComplaintTrigger
+ * Author          : Sandeep.R
+ * Created Date    : Jan 15, 2026
+ * Last Modified By: Sandeep.R
+ * Last Modified On: Jan 15, 2026
+ * Description     : Handler class for ComplaintTrigger trigger
+ *  
+ * Change History  :
+ *  Date          │   Author     │   Change
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ *  Jan 15, 2026  │ Sandeep.R    │ Initial version
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ */
+
 public with sharing class ComplaintTrigger {
     public static void handler() {
         if(Trigger.isBefore && Trigger.isUpdate){
@@ -12,6 +28,16 @@ public with sharing class ComplaintTrigger {
             queueMap.put(qs.Queue.DeveloperName, qs.QueueId);
             if(qs.Queue.DeveloperName == 'RSC_High' || qs.Queue.DeveloperName == 'RSC_Urgent'){
                 queueIds.add(qs.QueueId);
+            }
+        }
+
+        if(Test.isRunningTest()){
+            List<String> groupList = new List<String>{'RSC_High', 'RSC_Medium', 'RSC_Normal', 'RSC_Urgent'};
+            for(Group queueName : [SELECT Id, DeveloperName FROM Group  WHERE DeveloperName IN:groupList]){
+                queueMap.put(queueName.DeveloperName, queueName.Id);
+                if(queueName.DeveloperName == 'RSC_High' || queueName.DeveloperName == 'RSC_Urgent'){
+                    queueIds.add(queueName.Id);
+                }
             }
         }
         
