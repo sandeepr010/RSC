@@ -53,6 +53,61 @@
         <versionString>2.0.1</versionString>
     </actionCalls>
     <actionCalls>
+        <name>Send_email_High_or_Urgent</name>
+        <label>Send email High or Urgent</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>On_Closed_Case</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recipientAddresses</name>
+            <value>
+                <collectionElements>
+                    <elementReference>$Record.Owner:User.Email</elementReference>
+                </collectionElements>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>DefaultWorkflowUser</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Your Complaint Status Is Updated</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>&lt;p&gt;Hi {!Record_owner.Name}&lt;/p&gt;&lt;p&gt;A &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!$Record.Priority__c}&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; Priority &lt;/span&gt;complaint is assigned to you please check the details below&lt;/p&gt;&lt;p&gt;Complaint Number : {!$Record.Name}&lt;/p&gt;&lt;p&gt;Record Priority: {!$Record.Priority__c}&lt;/p&gt;&lt;p&gt;Target: {!SLA_CompletedBy}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>2.0.1</versionString>
+    </actionCalls>
+    <actionCalls>
         <name>Submit_for_close_case</name>
         <label>Submit for close case</label>
         <locationX>0</locationX>
@@ -206,6 +261,38 @@
             <targetReference>RSC_Activity_Record_Creation</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_State_High_or_Urgent</name>
+        <label>Check State High or Urgent</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>On_Closed_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Send_Email</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>High</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Priority__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Urgent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_email_High_or_Urgent</targetReference>
+            </connector>
+            <label>Send Email</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Is_Approved</name>
         <label>Is Approved</label>
@@ -400,7 +487,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>On_Closed_Case</targetReference>
+            <targetReference>Check_State_High_or_Urgent</targetReference>
         </connector>
         <inputReference>RSC_Activity</inputReference>
     </recordCreates>
@@ -510,14 +597,6 @@
         <connector>
             <targetReference>Is_Approved</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </filters>
         <object>RSC_Complaint__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
