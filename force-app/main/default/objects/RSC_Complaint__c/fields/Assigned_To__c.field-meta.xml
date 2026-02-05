@@ -10,7 +10,7 @@
             <operation>startsWith</operation>
             <value>Standard Platform User</value>
         </filterItems>
-        <isOptional>false</isOptional>
+        <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>User</referenceTo>
     <relationshipName>RSC_Complaints</relationshipName>

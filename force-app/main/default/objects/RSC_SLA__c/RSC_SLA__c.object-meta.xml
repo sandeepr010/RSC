@@ -161,6 +161,13 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>RSC_SLAs</pluralLabel>
+    <profileSearchLayouts>
+        <fields>NAME</fields>
+        <fields>Closed__c</fields>
+        <fields>Completed_By__c</fields>
+        <fields>Next_Notification_On__c</fields>
+        <profileName>System Administrator</profileName>
+    </profileSearchLayouts>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
